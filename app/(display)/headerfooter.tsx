@@ -48,7 +48,7 @@ function MenuBar({ menuLinks }: Readonly<{ menuLinks: MenuLink[] }>) {
         <div className={`flex space-x-6 items-center text-lg`}>
             {menuLinks.map((linkData, index) => (
                 <div key={index} className={linkData.className}>
-                    <Link href={linkData.link} className={`hover:text-sky-400 flex space-x-1 place-items-center`}>{linkData.icon !== null && <FontAwesomeIcon icon={linkData.icon} />} <h1 className={`${pathname === linkData.link ? "underline" : ""}`}>{linkData.name}</h1></Link>
+                    <Link href={linkData.link} className={`hover:text-sky-400 flex space-x-2 place-items-center`}>{linkData.icon !== null && <FontAwesomeIcon icon={linkData.icon} />} <h1 className={`${pathname === linkData.link ? "underline" : ""}`}>{linkData.name}</h1></Link>
                 </div>
             ))}
         </div>
