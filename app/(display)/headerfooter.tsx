@@ -1,12 +1,11 @@
 "use client"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBarsStaggered, faGlobe, faHome, faNewspaper, faToolbox } from "@fortawesome/free-solid-svg-icons"
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
-import { useLockBodyScroll } from "@uidotdev/usehooks"
 
 type MenuLink = {
     name: string;
@@ -59,7 +58,7 @@ function MenuBar({ menuLinks }: Readonly<{ menuLinks: MenuLink[] }>) {
 function MobileMenu({ menuLinks, setMobileMenuOpen }: Readonly<{ menuLinks: MenuLink[], setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }>) {
     const pathname = usePathname();
     const router = useRouter();
-    useLockBodyScroll();
+    useScrollLock();
     return (
         <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-600/95 to-indigo-500/95">
             <button className="absolute top-2 right-2 text-gray-400" onClick={() => setMobileMenuOpen(false)}>
@@ -81,4 +80,14 @@ function MobileMenu({ menuLinks, setMobileMenuOpen }: Readonly<{ menuLinks: Menu
         setMobileMenuOpen(false);
         router.push(link);
     }
+}
+
+function useScrollLock() {
+  useLayoutEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
 }
