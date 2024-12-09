@@ -1,4 +1,4 @@
-name: Run Tests (Jest)
+name: Test Code
 
 on:
   pull_request:
@@ -8,7 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -19,7 +18,10 @@ jobs:
           node-version: '21'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run Jest tests
+      - name: Lint code (ESLint)
+        run: npm run lint
+
+      - name: Test code (Jest)
         run: npm run test
